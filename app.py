@@ -135,7 +135,7 @@ def results():
 
         # update explanation
         explanation = explanation.replace("\n", " -- ").strip()
-        print(explanation, "<-- explanation")
+        # print(explanation, "<-- explanation")
 
     except:
         explanation = "An error occurred while generating the explanation. Please try again. (If this persists, it may be due to our ChatGPT API credits running out)"
