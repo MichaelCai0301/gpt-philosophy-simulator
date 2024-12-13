@@ -7,7 +7,6 @@
     <img src="{{ url_for('static', filename='images/winner.png') }}" alt="Winner Image" class="img-fluid mt-3">
     <p id="text" class="mt-4"></p>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -19,5 +18,9 @@
     });
   });
 </script>
+
+<footer class="text-center mt-5">
+    <p class="text-danger">Warning: GPT responses, though engineered to reflect our explanations, may have some inaccuracies that deviate from our explanations. See our explanations on the "Explanations" tab for the theoretical/intended behavior.</p>
+</footer>
 
 {% endblock %}
