@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
+
+{% block title %}
+    Simulation
+{% endblock %}
+
 {% block content %}
+<div class="container text-center">
+    <h1 class="mt-5">The Battle is Underway!</h1>
+    <img src="{{ url_for('static', filename='images/battle.gif') }}" alt="Battle Animation" class="img-fluid">
+    <p class="mt-3">This might take a moment...</p>
+</div>
 
-<h1>{% block title %} simulation results {% endblock %}</h1>
-<p>check out le docs -- TODO: make this not ugly</p>
-<p id="text"></p>
-
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    var typed = new Typed("#text", {
-      strings: ["{{ simulation_result }}"], 
-      typeSpeed: 25,              
-      backSpeed: 25,              
-      loop: false                 
-    });
-  });
+  setTimeout(function() {
+    window.location.href = "{{ url_for('results') }}";
+}, {{ duration }}); // Default to 3000ms if duration is missing
 </script>
 
 {% endblock %}
