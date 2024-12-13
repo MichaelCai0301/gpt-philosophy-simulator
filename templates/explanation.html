@@ -1,6 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="container">
+    <style>
+        .pdf-panel {
+            margin-top: 20px;
+        }
+        .pdf-card {
+            text-align: center;
+        }
+        .pdf-card iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+        }
+    </style>
     <h1>{% block title %} Explanation {% endblock %}</h1>
-    check out le docs -- TODO: make this not ugly
+    <h5>
+        This page provides the theoretical and intended behavior of each philosophy's interactions. These explanations
+        contain the canonical behavior of each philosophy, regardless of whether the simulation itself may contradict
+        them (GPT sometimes has trouble summarizing/understanding things accurately when given a large bulk of
+        information).
+    </h5>
+<!-- TODO: link to pdf upon clicking -->
+    <!-- PDF Panel -->
+    <div class="row pdf-panel">
+        <div class="col-md-4">
+            <div class="card pdf-card">
+                <div class="card-body">
+                    <h5 class="card-title">Laozi</h5>
+                    <p class="card-text">Click here for explanation of the behavior/interactions of Laozi's philosophy.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card pdf-card">
+                <div class="card-body">
+                    <h5 class="card-title">Lord Shang</h5>
+                    <p class="card-text">Click here for explanation of the behavior/interactions of Lord Shang's philosophy.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card pdf-card">
+                <div class="card-body">
+                    <h5 class="card-title">Xunzi</h5>
+                    <p class="card-text">Click here for explanation of the behavior/interactions of Xunzi's philosophy.</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<br/><br/>
 {% endblock %}
