@@ -5,6 +5,19 @@
     <h1 class="mt-5">The Winner is...</h1>
     <h2 class="text-success">{{ winner }}</h2>
     <img src="{{ url_for('static', filename='images/winner.png') }}" alt="Winner Image" class="img-fluid mt-3">
-    <p class="mt-4">{{ explanation }}</p>
+    <p id="text" class="mt-4"></p>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var typed = new Typed("#text", {
+      strings: ["{{ explanation }}"], 
+      typeSpeed: 25,              
+      backSpeed: 25,
+      loop: false                 
+    });
+  });
+</script>
+
 {% endblock %}

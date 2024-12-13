@@ -20,7 +20,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 dotenv.load_dotenv("secrets.env")
 
-openai.api_key = os.getenv("OPENAI_API_KEY").strip()
+openai.api_key = os.getenv("OPEN_AI_API_KEY").strip()
+
 
 gpt_feeder_input = extract_pdf_text("GPT_input.pdf")
 
@@ -80,7 +81,7 @@ def simulation():
     return render_template('simulation.html', duration=duration)
 
 @app.route('/results', methods=['GET', 'POST'])
-def results():        
+def results():
     context = f"""
     Duration: {session["data"]['duration']}
     Distance: {session["data"]['distance']}
@@ -95,11 +96,11 @@ def results():
     """
 
     # Construct the prompt
+    # TODO: add back and forth argumentation (not between philosophers)
     prompt = f"""
-    Based specifically on the parameters provided in the information below, determine the winner of the battle and provide a 5-10 sentence explanation as to why this philosophy triumphed over the other in this situation. Relate your answer directly to the parameters and why this combination of parameters led you to your chosen outcome. Your initial answer should just be the name of the winning philosopher. Then in the paragraph you give your explanation.
+    Based specifically on the parameters provided in the information below, determine the winner of the battle or if a DRAW happened. Provide a 5-10 sentence explanation as to why this philosophy triumphed over the other in this situation, or why a DRAW happened if you are not confident or think neither player will be convinced by the other. Relate your answer directly to the parameters and why this combination of parameters led you to your chosen outcome. Your initial answer should just be the name of the winning philosopher or the word “Draw”.  Then in the paragraph provide your explanation. Before returning your answer, check it and make sure it satisfies as many points as possible (like duration). 
     {context}
     """
-
     # OpenAI API key and endpoint
     headers = {
         "Authorization": f"Bearer {openai.api_key}",
@@ -117,25 +118,29 @@ def results():
     try:
         # Make the API request
         response = requests.post("https://api.openai.com/v1/chat/completions", json=data, headers=headers)
-        response.raise_for_status()  # Raise an error for bad HTTP responses (4xx or 5xx)
-
         # Parse the response
         result = response.json()
+        response.raise_for_status()  # Raise an error for bad HTTP responses (4xx or 5xx)
+
+        
         explanation = result['choices'][0]['message']['content'].strip()
 
         # Extract the winner using a regular expression
-        if explanation[:2] == "Lo":
+        if explanation[:2] == "Lo" or explanation[:2] == "Sh":
             winner = "Lord Shang"
         elif explanation[:2] == "La":
             winner = "Laozi"
         elif explanation[:2] == "Xu":
             winner = "Xunzi"
+        else:
+            winner = "No Winner"
 
         # update explanation
-        explanation = explanation.replace(winner, "", 1).strip()
+        explanation = explanation.replace("\n", " -- ").strip()
+        print(explanation, "<-- explanation")
 
     except:
-        explanation = "An error occurred while generating the explanation. Please try again."
+        explanation = "An error occurred while generating the explanation. Please try again. (If this persists, it may be due to our ChatGPT API credits running out)"
         winner = "Unknown"
 
     return render_template('results.html', winner=winner, explanation=explanation)

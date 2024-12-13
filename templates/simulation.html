@@ -14,7 +14,7 @@
 <script>
   setTimeout(function() {
     window.location.href = "{{ url_for('results') }}";
-}, {{ duration }}); // Default to 3000ms if duration is missing
+}, 3000); 
 </script>
 
 {% endblock %}
