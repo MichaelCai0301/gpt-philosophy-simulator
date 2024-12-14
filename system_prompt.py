@@ -1,35 +1,37 @@
 def get_prompt(context):
     """
-    Generate a prompt based on the given context with chain of thought and reflection.
+    Generate a debate prompt with minimized fluff, detailed debate, and deep reflection.
     """
     return f"""
-    Based specifically on the parameters provided in the information below, 
-    determine the winner of the battle or if a DRAW happened by simulating a debate 
-    between the two philosophers. 
+    Based on the parameters provided below, simulate a debate between two philosophers. The goal is to determine which philosophy would spread more under the given conditions or if the result is a draw.
+    Reason through your response step by step, analyzing the strengths and weaknesses of each philosopher's arguments and debating style.
 
-    The simulation should include a dynamic and interactive back-and-forth dialogue 
-    where each philosopher presents strong arguments and counters the other's points 
-    step-by-step. Each argument and response should be logical, sequential, and reflective 
-    of their philosophical principles. They should ask each other questions, respond directly 
-    to criticisms, and strengthen their positions with detailed reasoning.
+    ### Guidelines:
+    1. **Quick Introduction**:
+       - Summarize each philosopher's core philosophy in 2-3 sentences.
+       - Avoid unnecessary details and transitions; focus only on setting up the debate context.
 
-    Structure the dialogue as follows:
-    1. **Opening Statements**: Each philosopher introduces their core stance based on the 
-       given parameters.
-    2. **Main Debate**: A series of exchanges where each philosopher responds to the other's 
-       arguments. They should address points of agreement or contention explicitly, 
-       refining their arguments and identifying weaknesses in the other’s position.
-    3. **Reflection and Analysis**: Both philosophers reflect on the debate, considering 
-       whether they were persuaded by the other's arguments. If not, explain why their 
-       position remains stronger in light of the discussion.
+    2. **Engaging Debate**:
+       - Create a multi-paragraph, dynamic debate with multiple rounds of back-and-forth dialogue.
+       - Ensure both philosophers respond directly to each other's points.
+       - Make the arguments specific, relevant, and insightful. Avoid generic statements or vague reasoning.
+       - Highlight contrasts between their philosophies, such as their methods for achieving influence or their underlying principles.
+       - Note for Lord Shang: whoever is arguing for Lord Shang should make their primary argument that the philosophy will spread effectively due to its militaristic/authoritarian nature.
+    3. **Detailed Reflection and Analysis**:
+       - Dedicate the longest section to analyzing the debate in depth.
+       - Address:
+         - Which arguments were the strongest and why.
+         - How the philosophers' styles and approaches influenced their persuasiveness.
+         - What limitations or weaknesses were exposed in their arguments.
+       - Tie this analysis to the given parameters (e.g., sparse followers, short duration, etc.).
+       - Avoid repetitive or surface-level observations. Be concise but insightful.
 
-    Your output should include:
-    - The name of the winning philosopher (or “Draw” if neither prevailed).
-    - A detailed explanation that highlights key moments in the dialogue and how they 
-      influenced the outcome.
+    ### Final Output:
+    - Begin with the result in **bold**: the winner's name or "DRAW" if neither prevailed.
+    - Follow with detailed explanations for the result:
+      - Use structured sections with headers like **Introduction**, **Main Debate**, and **Reflection and Analysis**.
+      - Keep the tone formal and focused on delivering a clear and compelling analysis.
 
-    Ensure your reasoning is step-by-step, clear, and comparative, directly tying the 
-    outcome to the parameters provided.
-
+    Parameters:
     {context}
     """

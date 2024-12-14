@@ -1,26 +1,49 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container text-center">
-    <h1 class="mt-5">The Winner is...</h1>
-    <h2 class="text-success">{{ winner }}</h2>
-    <img src="{{ url_for('static', filename='images/winner.png') }}" alt="Winner Image" class="img-fluid mt-3">
-    <p id="text" class="mt-4"></p>
+<div class="container">
+    <h1 class="text-center mt-5">The Winner is...</h1>
+    <h2 class="text-success text-center">{{ winner }}</h2>
+    <div class="text-center">
+        <img src="{{ url_for('static', filename='images/winner.png') }}" alt="Winner Image" class="img-fluid mt-3">
+    </div>
+    <div id="streamed-content" class="mt-5 p-4" style="background-color: #f8f9fa; border-radius: 8px; line-height: 1.8; text-align: left;">
+        <!-- Streaming content will be dynamically inserted here -->
+    </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    var typed = new Typed("#text", {
-      strings: ["{{ explanation }}"], 
-      typeSpeed: 25,              
-      backSpeed: 25,
-      loop: false                 
-    });
+    const contentElement = document.getElementById("streamed-content");
+
+    // Fetch and stream the explanation text dynamically
+    fetch("{{ url_for('results_stream') }}")
+      .then((response) => {
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder("utf-8");
+        let buffer = "";
+
+        function read() {
+          reader.read().then(({ done, value }) => {
+            if (done) return; // Finished streaming
+            buffer += decoder.decode(value, { stream: true });
+
+            // Append the latest buffer as HTML
+            contentElement.innerHTML = buffer;
+            read();
+          });
+        }
+
+        read();
+      })
+      .catch((err) => {
+        console.error("Error streaming explanation:", err);
+        contentElement.innerHTML = "<p class='text-danger'>An error occurred while streaming the explanation. Please refresh the page.</p>";
+      });
   });
 </script>
 
 <footer class="text-center mt-5">
     <p class="text-danger">Warning: GPT responses, though engineered to reflect our explanations, may have some inaccuracies that deviate from our explanations. See our explanations on the "Explanations" tab for the theoretical/intended behavior.</p>
 </footer>
-
 {% endblock %}
