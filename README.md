@@ -3,7 +3,7 @@
 Modeling the philosophical interactions between Xunzi, Lord Shang, and Laozi through an interactive simulation to explore their views on governance, law, and human nature
 
 # Setup Process
-(NOTE: the shell script below may not work at first; instead run each command in the shell script)
+(NOTE: the shell script below may not work at first; instead run each command in the shell script)\
 `chmod +x setup_env.sh && chmod +x ./myenv/bin/activate && source setup_env.sh`\
 `flask run`
 
