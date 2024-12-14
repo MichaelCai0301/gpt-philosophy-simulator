@@ -2,16 +2,18 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="text-center mt-5">The Winner is...</h1>
-    <h2 class="text-success text-center">{{ winner }}</h2>
-    <div class="text-center">
+    <!-- <h1 class="text-center mt-5">The Winner is...</h1> -->
+    <!-- <h2 id="result" class="text-center" style="font-size: 3rem; color: #ff6f61; font-weight: bold; margin-bottom: 1.5rem;">{{ winner }}</h2> -->
+    <!-- <div class="text-center">
         <img src="{{ url_for('static', filename='images/winner.png') }}" alt="Winner Image" class="img-fluid mt-3">
-    </div>
-    <div id="streamed-content" class="mt-5 p-4" style="background-color: #f8f9fa; border-radius: 8px; line-height: 1.8; text-align: left;">
-        <!-- Streaming content will be dynamically inserted here -->
+    </div> -->
+    <div id="streamed-content" class="mt-5 p-4" style="background-color: #f8f9fa; border-radius: 8px; line-height: 1.8; text-align: left; font-size: 1.2rem;">
+        <!-- Rendered Markdown content will be dynamically inserted here -->
     </div>
 </div>
 
+<!-- Include Marked.js for Markdown rendering -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const contentElement = document.getElementById("streamed-content");
@@ -25,11 +27,19 @@
 
         function read() {
           reader.read().then(({ done, value }) => {
-            if (done) return; // Finished streaming
+            if (done) return; // finished streaming
             buffer += decoder.decode(value, { stream: true });
 
-            // Append the latest buffer as HTML
-            contentElement.innerHTML = buffer;
+            // parse the markdown content,render it as HTML with styling
+            const html = marked.parse(buffer);
+
+            const styledHtml = html
+              .replace(/<h1>/g, '<h1 style="font-size: 2rem; color: #007bff; margin-top: 1.5rem; font-weight: bold;">')
+              .replace(/<h2>/g, '<h2 style="font-size: 1.75rem; color: #343a40; margin-top: 1.2rem; font-weight: bold;">')
+              .replace(/<h3>/g, '<h3 style="font-size: 1.5rem; color: #6c757d; margin-top: 1rem; font-weight: bold;">')
+              .replace(/<p>/g, '<p style="margin-bottom: 1rem;">');
+
+            contentElement.innerHTML = styledHtml;
             read();
           });
         }

@@ -5,6 +5,8 @@ def get_prompt(context):
     return f"""
     Based on the parameters provided below, simulate a debate between two philosophers. The goal is to determine which philosophy would spread more under the given conditions or if the result is a draw.
     Reason through your response step by step, analyzing the strengths and weaknesses of each philosopher's arguments and debating style.
+    Do not bias draws, as you seem to prefer giving that as the final verdict. Make sure you are reasoning through the winner based on the parameters we defined below.
+    IMPORTANT: Don't make the philosophers according to your own beliefs, but rather make them argue based on how we defined them in the parameters context below.
 
     ### Guidelines:
     1. **Quick Introduction**:
@@ -27,11 +29,13 @@ def get_prompt(context):
        - Avoid repetitive or surface-level observations. Be concise but insightful.
 
     ### Final Output:
+    - IMPORTANT: The first part of your entire response should be the name of the philosopher that won, or output the word "DRAW" if there is a draw.
     - Begin with the result in **bold**: the winner's name or "DRAW" if neither prevailed.
     - Follow with detailed explanations for the result:
       - Use structured sections with headers like **Introduction**, **Main Debate**, and **Reflection and Analysis**.
       - Keep the tone formal and focused on delivering a clear and compelling analysis.
 
-    Parameters:
+    IMPORTANT: MAKE SURE TO BASE YOUR RESPONSE ON THE GIVEN PARAMETERS. DO NOT INTRODUCE NEW INFORMATION OR ASSUMPTIONS.
+    HERE ARE THE PARAMETERS:
     {context}
     """
