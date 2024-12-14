@@ -10,14 +10,17 @@ Modeling the philosophical interactions between Xunzi, Lord Shang, and Laozi thr
 )\
 `chmod +x setup_env.sh && chmod +x ./myenv/bin/activate && source setup_env.sh`\
 `flask run`
+\
+NOTE: the dependencies below should also be imported\
+pip install requests\
+pip install openai==0.28 # for access to ChatGPT\
+pip install python-dotenv\
+pip install fitz\
+pip install pymupdf\
+pip install Flask-Session
+
 
 # Saving dependencies in `requirements.txt`
 
 `pip freeze > requirements.txt`
 
-pip install requests
-pip install openai==0.28 # for access to ChatGPT
-pip install python-dotenv
-pip install fitz
-pip install pymupdf
-pip install Flask-Session
